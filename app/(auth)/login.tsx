@@ -16,7 +16,6 @@ export default function Login() {
       const userCred = await userLogin({ email, password });
       const token = await userCred.user.getIdToken();
       await saveToken(token);
-      alert("로그인 성공");
       router.replace("/profile");
     } catch (e: any) {
       alert("로그인 실패: " + e.message);
