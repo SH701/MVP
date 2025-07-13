@@ -3,7 +3,7 @@ import { db } from "@/lib/firebase";
 import { Ionicons } from '@expo/vector-icons';
 import { Video } from 'expo-av';
 import { Link, useRouter } from 'expo-router';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from "react-native-vector-icons/EvilIcons";
@@ -21,18 +21,22 @@ export default function Post() {
   const router = useRouter();
   const [posts, setPosts] = useState<PostType[]>([]);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const querySnapshot = await getDocs(collection(db, "post"));
-      const data = querySnapshot.docs.map(doc => {
-        const d = doc.data() as PostType;
-        const { id, ...rest } = d;
-        return { id: doc.id, ...rest };
-      });
-      setPosts(data);
-    };
-    fetchPosts();
-  }, []);
+ useEffect(() => {
+  const fetchPosts = async () => {
+    const q = query(
+      collection(db, "post"),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    const data = querySnapshot.docs.map(doc => {
+      const d = doc.data() as PostType;
+      const { id, ...rest } = d;
+      return { id: doc.id, ...rest };
+    });
+    setPosts(data);
+  };
+  fetchPosts();
+}, []);
 
   return (
     <View style={styles.container}>
