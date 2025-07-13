@@ -1,4 +1,4 @@
-import { db, firebaseStorage } from '@/lib/firebase';
+import { auth, db, firebaseStorage } from '@/lib/firebase';
 import { Video } from 'expo-av';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
@@ -22,7 +22,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function CreatePost() {
   const router = useRouter();
-  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [videoUri,setVideoUri] = useState<string | null>(null)
@@ -54,11 +53,11 @@ export default function CreatePost() {
     return url
   }
   const handleSubmit = async()=>{
-    if(!title.trim()||!content.trim()){
-      Alert.alert('입력 오류','제목과 내용을 모두 입력해주세요');
-      return ;
-    }
     try{
+      if(!imageUri){
+        Alert.alert('사진 첨부 필수', '게시글 등록 시 사진은 꼭 첨부해야 합니다.');
+        return;
+      }
       setUploading(true);
       let imageUrl = null;
       let videoUrl = null;
@@ -69,14 +68,14 @@ export default function CreatePost() {
         videoUrl = await uploadFile(videoUri,'videos')
       }
       await addDoc(collection(db,"post"),{
-        title,
+        nickname:auth.currentUser?.displayName,
         content,
         imageUrl,
         videoUrl,
         createdAt: serverTimestamp(),
       })
        Alert.alert('성공', '포스트가 등록되었습니다!');
-    router.push('/post');
+    router.push('/feed');
   } catch (error: any) {
     console.error(error);
     Alert.alert('업로드 실패', error.message || '다시 시도해주세요.');
@@ -102,15 +101,9 @@ export default function CreatePost() {
           style={styles.mediaPreview}
         />
       ) : (
-        <Icon name="photo" size={30} color="#000"  style={{ transform: [{ rotate: '-20deg' }] }}/>
+        <Icon name="photo" size={30} color="#5a5858"  style={{ transform: [{ rotate: '-20deg' }] }}/>
       )}
     </View>
-      <TextInput
-        style={styles.titleInput}
-        placeholder="제목을 입력하세요"
-        value={title}
-        onChangeText={setTitle}
-      />
       <TextInput
         style={styles.contentInput}
         placeholder="내용을 입력하세요"
@@ -152,7 +145,7 @@ const styles = StyleSheet.create({
   },
   contentInput: {
     fontSize: 16,
-    height: 50,
+    height: 35,
     textAlignVertical: 'top',
     borderWidth: 1,
     paddingVertical:7,

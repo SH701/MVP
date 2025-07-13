@@ -9,10 +9,10 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="post/index"
+        name="feed/index"
         options={{
-          title: 'Post',
-          tabBarLabel: 'Post',
+          title: 'Feed',
+          tabBarLabel: 'Feed',
           tabBarIcon: ({ color, size }) => (
             <Text style={{ fontSize: size }}>📖</Text>
           ),
