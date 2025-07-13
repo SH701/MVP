@@ -44,7 +44,7 @@ export default function Sign() {
       const token = await userCred.user.getIdToken();
       await saveToken(token);
       alert("회원가입 성공");
-      router.replace("/profile");
+      router.replace("/feed");
     } catch (e: any) {
       console.log(e);
       alert("회원가입 실패: " + e.message);
