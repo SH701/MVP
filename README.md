@@ -1,50 +1,54 @@
-# Welcome to your Expo app 👋
+# MVP
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+사진과 설명(게시물)을 올리고, 삭제할 수 있는 심플한 SNS 앱입니다.  
+프로필 화면에서는 닉네임 변경, 내 게시글 보기 등 다양한 기능을 제공합니다.
 
-## Get started
+## ✨ 주요 기능
 
-1. Install dependencies
+- **사진/설명 업로드**: 이미지를 선택해 게시글로 등록
+- **게시글 삭제**: 내가 쓴 게시글 삭제
+- **프로필 화면**
+  - 닉네임 변경
+  - 내 게시글(사진 그리드) 보기
+- **로그아웃**
 
-   ```bash
-   npm install
-   ```
+## 🖼️ 주요 화면
 
-2. Start the app
+### 1. 피드 화면 (Feed)
+- 여러 사용자의 사진/게시글 목록 확인
+- 이미지 클릭 시 상세 페이지 이동
 
-   ```bash
-   npx expo start
-   ```
+### 2. 게시글 업로드
+- 이미지와 설명(텍스트) 입력
+- [등록] 버튼으로 업로드
 
-In the output, you'll find options to open the app in a
+### 3. 프로필 화면
+- 닉네임 변경
+- 내 게시글(사진 3열 그리드)
+- 로그아웃
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📸 예시 화면
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+| 피드 화면                | 게시글 업로드              | 프로필(내 게시글)          |
+|------------------------|------------------------|--------------------------|
+| ![feed](./screenshots/feed.png) | ![upload](./screenshots/upload.png) | ![profile](./screenshots/profile.png) |
 
-## Get a fresh project
+> 예시 이미지는 `./screenshots/` 폴더에 캡처 파일을 추가하세요!
 
-When you're ready, run:
+---
+
+## ⚙️ 기술 스택
+
+- **React Native (Expo)**
+- **Firebase (Firestore, Auth, Storage)**
+- expo-router
+
+---
+
+## 🚀 실행 방법
 
 ```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+git clone https://github.com/SH701/MVP.git
+cd MVP
+npm install
+npx expo start
