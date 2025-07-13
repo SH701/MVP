@@ -72,7 +72,7 @@ export default function Profile() {
     try {
       await userLogout();
       await clearToken();
-      router.replace('/login');
+      router.replace('/');
     } catch (e: any) {
       alert('로그아웃 중 오류가 발생했습니다: ' + e.message);
     }
